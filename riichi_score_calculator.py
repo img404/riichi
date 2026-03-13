@@ -25,7 +25,7 @@ tsumo = input("Did you win by tsumo (self-draw)? y/n: ") in ["y", "yes", "yeah"]
 han = int(input("How many han did the hand score? Enter a numeral: "))
 
 
-# If the han value is less than 5, then we must count fu. Otherwise, fu are given a placeholder value of 0.
+# If the han value is less than 5, then we must count fu. Otherwise, fu is given a placeholder value of 0.
 if han < 5:
     fu = int(input("How many fu did the hand score? Enter a numeral: "))
 else

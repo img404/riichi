@@ -1,6 +1,6 @@
 """
 Username: img404
-Version: 1.03
+Version: 1.032
 Purpose: Text-based python app for determining riichi mahjong score payments based on user input.
 
 I'd like to add a variable at the top for kiriage mangan (a bool that controls whether 4han 30fu & 3han 60fu rounds up to mangan).

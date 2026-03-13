@@ -5,5 +5,5 @@ Version 1.00 took about a week to write.
 
 I plan to continue experimenting, and my next goal is to create a haipai (opening hand) simulator. 
 Later project ideas include:
-    - an app that checks if a hand is complete & returns its yaku (and probably score, too).
-    - an app that determines shanten (how far away from winning the hand is) and upgrades (tiles that reduce shanten).
+1. an app that checks if a hand is complete & returns its yaku (and probably score, too).
+2. an app that determines shanten (how far away from winning the hand is) and upgrades (tiles that reduce shanten).

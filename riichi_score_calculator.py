@@ -1,6 +1,6 @@
 """
 Username: img404
-Version: 1.01
+Version: 1.02
 Last updated: 3/12/26
 Purpose: Text-based python app for determining riichi mahjong score payments based on user input.
 
@@ -78,7 +78,7 @@ else:
 
 
 # Print the hand conditions & payment owed.
-print("-------------------------------------------------")
+print("----------------------------------------------------------")
 if dealer:
     if tsumo:
         print("Dealer tsumo.")
@@ -96,4 +96,4 @@ else:
     print(hand_type.capitalize() + "; " + str(honba) + " honba.")
 
 print("Payment: " + payment)
-print("-------------------------------------------------")
+print("----------------------------------------------------------")

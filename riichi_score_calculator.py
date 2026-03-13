@@ -1,6 +1,6 @@
 """
 Username: img404
-Version: 1.032
+Version: 1.04
 Purpose: Text-based python app for determining riichi mahjong score payments based on user input.
 
 I'd like to add a variable at the top for kiriage mangan (a bool that controls whether 4han 30fu & 3han 60fu rounds up to mangan).
@@ -32,13 +32,14 @@ else:
     fu = 0
 
 
-# Ask the user how many repeats there were, and convert the input to an integer.
-honba = int(input("How many honba were on the table? Enter a numeral: "))
-
-
 # Using han and fu values, determine the hand type and basic points.
 if han >= 13:
-    hand_type = input("Was the hand a counted yakuman, single yakuman, or double yakuman? (Enter counted/single/double:) ") + ' yakuman'
+    yakuman_types = ["counted yakuman", "single yakuman", "double yakuman"]
+    while True:
+        hand_type = input("Was the hand a counted yakuman, single yakuman, or double yakuman? (Enter counted/single/double:) ") + ' yakuman'
+        if hand_type in yakuman_types:
+            break
+        print(f"'{hand_type}' isn't a valid input. Please enter counted, single, or double.")
     if hand_type == 'double yakuman':
         basic_points = 16000
     elif hand_type in ['single yakuman', 'counted yakuman']:
@@ -58,6 +59,10 @@ elif han >= 5 or (han == 4 and fu >= 30) or (han == 3 and fu >= 60):
 else:
     hand_type = 'normal'
     basic_points = fu * 2 ** (2 + han)
+
+
+# Ask the user how many repeats there were, and convert the input to an integer.
+honba = int(input("How many honba were on the table? Enter a numeral: "))
 
 
 # Payments must be in multiples of 100, so let's define a function that rounds values up to the next hundred.

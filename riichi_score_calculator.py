@@ -1,11 +1,12 @@
 """
 Username: img404
-Date: 3/12/26
-Purpose: Text-based python app for determining riichi mahjong score payments based on user input. 
+Version: 1.01
+Last updated: 3/12/26
+Purpose: Text-based python app for determining riichi mahjong score payments based on user input.
+
+I'd like to add a variable at the top for kiriage mangan (a bool that controls whether 4han 30fu & 3han 60fu rounds up to mangan).
+Another possible change is regarding counted [kazoe] yakuman and the WRC-official yonbaiman (same value but doesn't stack with other yakuman).
 """
-
-
-import math
 
 
 # Introduce the program to the user.
@@ -58,6 +59,7 @@ else:
 
 
 # Payments must be in multiples of 100, so let's define a function that rounds values up to the next hundred.
+import math
 def round(x):
     return math.ceil(x / 100) * 100
 

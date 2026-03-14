@@ -1,7 +1,7 @@
 This repo contains self-directed learning for Python through riichi mahjong topics. 
 
 
-The first program was **riichi_score_calculator**, which takes user input about a winning hand and calculates score payments. The initial iteration uploaded to GitHub took about a week to write. After initially using a naive version tracking system, I am now using SemVar (https://semver.org/) to track updates.
+The first program was **riichi_score_calculator**, which takes user input about a winning hand and calculates score payments. The initial iteration uploaded to GitHub took about a week to write. After first using a naive version tracking system, I am now using SemVar (https://semver.org/) to track updates.
 
 Roadmap for riichi_score_calculator.py:
 1. Input validation is needed for han, fu, and honba.

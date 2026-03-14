@@ -1,6 +1,6 @@
 """
 Username: img404
-Version: 1.05
+Version: 0.1.7
 Purpose: Text-based python app for determining riichi mahjong score payments based on user input.
 
 I'd like to add a variable at the top for kiriage mangan (a bool that controls whether 4han 30fu & 3han 60fu rounds up to mangan).
@@ -12,13 +12,28 @@ import math
 
 
 print("----------------------------------------------------------")
+print("----------------------------------------------------------")
 print("Riichi Mahjong Score Calculator")
 print("Answer the following questions to score your winning hand.")
 print("----------------------------------------------------------")
+print("----------------------------------------------------------")
 
 
-dealer = input("Were you the dealer? y/n: ") in ["y", "yes", "yeah"]
-tsumo = input("Did you win by tsumo (self-draw)? y/n: ") in ["y", "yes", "yeah"]
+yes_no = ["y", "n"]
+while True:
+    response = input("Were you the dealer? y/n: ")
+    if response in yes_no:
+        dealer = response == "y"
+        break
+    print("Please enter either 'y' or 'n'.")
+
+yes_no = ["y", "n"]
+while True:
+    response = input("Did you win by tsumo (self-draw)? y/n: ")
+    if response in yes_no:
+        tsumo = response == "y"
+        break
+    print("Please enter either 'y' or 'n'.")
 
 
 han = int(input("How many han did the hand score? Enter a numeral: "))
@@ -99,4 +114,5 @@ else:
     print(hand_type.capitalize() + "; " + str(honba) + " honba.")
 
 print("Payment: " + payment)
+print("----------------------------------------------------------")
 print("----------------------------------------------------------")

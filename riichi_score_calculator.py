@@ -1,27 +1,26 @@
 """
 Username: img404
-Version: 1.04
+Version: 1.05
 Purpose: Text-based python app for determining riichi mahjong score payments based on user input.
 
 I'd like to add a variable at the top for kiriage mangan (a bool that controls whether 4han 30fu & 3han 60fu rounds up to mangan).
 Another possible change is regarding counted [kazoe] yakuman and the WRC-official yonbaiman (same value but doesn't stack with other yakuman).
 """
 
+
 import math
 
-# Introduce the program to the user.
+
 print("----------------------------------------------------------")
 print("Riichi Mahjong Score Calculator")
 print("Answer the following questions to score your winning hand.")
 print("----------------------------------------------------------")
 
 
-# Ask the user if they were the dealer and if they won by self-draw and convert the inputs to a bool.
 dealer = input("Were you the dealer? y/n: ") in ["y", "yes", "yeah"]
 tsumo = input("Did you win by tsumo (self-draw)? y/n: ") in ["y", "yes", "yeah"]
 
 
-# Ask the user to input han value, and convert the input to an integer.
 han = int(input("How many han did the hand score? Enter a numeral: "))
 
 
@@ -32,7 +31,7 @@ else:
     fu = 0
 
 
-# Using han and fu values, determine the hand type and basic points.
+# The basic points of the hand are determined using han and fu values.
 if han >= 13:
     yakuman_types = ["counted yakuman", "single yakuman", "double yakuman"]
     while True:
@@ -61,7 +60,6 @@ else:
     basic_points = fu * 2 ** (2 + han)
 
 
-# Ask the user how many repeats there were, and convert the input to an integer.
 honba = int(input("How many honba were on the table? Enter a numeral: "))
 
 
@@ -70,7 +68,7 @@ def round_up_100(x):
     return math.ceil(x / 100) * 100
 
 
-# Determine score payments based on dealer, tsumo, basic points, and honba.
+# Score payments are calculated based on dealer, tsumo, basic points, and honba.
 if dealer:
     if tsumo:
         payment = str(round_up_100(2 * basic_points) + 100 * honba) + ' from each player.'
@@ -83,7 +81,6 @@ else:
         payment = str(round_up_100(4 * basic_points) + 300 * honba) + ' from the player who discarded your winning tile.'
 
 
-# Print the hand conditions & payment owed.
 print("----------------------------------------------------------")
 if dealer:
     if tsumo:

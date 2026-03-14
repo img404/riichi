@@ -1,6 +1,8 @@
 This repo contains self-directed learning for Python through riichi mahjong topics. 
 
-The first program was riichi_score_calculator, which takes user input about a winning hand and calculates score payments.  The first iteration uploaded to GitHub took about a week to write. 
+The first program was **riichi_score_calculator**, which takes user input about a winning hand and calculates score payments.  
+
+The first iteration uploaded to GitHub took about a week to write. 
 
 I plan to continue experimenting, and my next goal is to create a haipai (opening hand) simulator. 
 Later project ideas include:

@@ -1,11 +1,16 @@
 """
 Username: img404
-Version: 0.3.0
+Version: 0.3.1
 Purpose: Text-based python app for determining riichi mahjong score payments based on user input.
 """
 
 
 import math
+
+
+# Payments must be in multiples of 100, so let's define a function that rounds values up to the next hundred.
+def round_up_100(x):
+    return math.ceil(x / 100) * 100
 
 
 yes_no = ["y", "n"]
@@ -32,22 +37,23 @@ while True:
     print("--------------------------------------------------------------------------------------------------------------------")
     print("--------------------------------------------------------------------------------------------------------------------")
     while True:
-        dealer_response = input("Were you the dealer? y/n: ")
+        dealer_response = input("Were you the dealer? y/n: ").lower().strip()
         if dealer_response in yes_no:
             dealer = dealer_response == "y"
             break
         print("Please enter either 'y' or 'n'.")
 
     while True:
-        tsumo_response = input("Did you win by tsumo (self-draw)? y/n: ")
+        tsumo_response = input("Did you win by tsumo (self-draw)? y/n: ").lower().strip()
         if tsumo_response in yes_no:
             tsumo = tsumo_response == "y"
             break
         print("Please enter either 'y' or 'n'.")
 
     while True:
-        han = int(input("How many han did the hand score? Enter a numeral: "))
-        if str(han) in valid_han_amounts:
+        han = input("How many han did the hand score? Enter a numeral: ")
+        if han in valid_han_amounts:
+            han = int(han)
             break
         else:
             print(f"Han value cannot be '{han}'. Please try again.")
@@ -55,8 +61,9 @@ while True:
     # If the han value is less than 5, then we must count fu. Otherwise, fu is given a placeholder value of 0.
     if han < 5:
         while True:
-            fu = int(input("How many fu did the hand score? Enter a numeral: "))
-            if str(fu) in valid_fu_amounts:
+            fu = input("How many fu did the hand score? Enter a numeral: ")
+            if fu in valid_fu_amounts:
+                fu = int(fu)
                 break
             print(f"Fu value cannot be '{fu}'. Please try again.")
     else:
@@ -65,7 +72,8 @@ while True:
     # The basic points of the hand are determined using han and fu values.
     if han >= 13:
         while True:
-            hand_type = input("Was the hand a counted yakuman, single yakuman, or double yakuman? (Enter counted/single/double:) ") + ' yakuman'
+            yakuman_response = input("Was the hand a counted yakuman, single yakuman, or double yakuman? (Enter counted/single/double:) ").lower().strip()
+            hand_type = yakuman_response + ' yakuman'
             if hand_type in yakuman_types:
                 break
             print(f"'{hand_type}' isn't a valid input. Please enter counted, single, or double.")
@@ -90,14 +98,12 @@ while True:
         basic_points = fu * 2 ** (2 + han)
 
     while True:
-        honba = int(input("How many honba were on the table? Enter a numeral: "))
-        if str(honba) in valid_honba_amounts:
+        honba = input("How many honba were on the table? Enter a numeral: ")
+        if honba in valid_honba_amounts:
+            honba = int(honba)
             break
-        print(f"'{honba}' is not a possible honba value. Please try again.")
+        print(f"Honba value cannot be '{honba}'. Please try again.")
 
-    # Payments must be in multiples of 100, so let's define a function that rounds values up to the next hundred.
-    def round_up_100(x):
-        return math.ceil(x / 100) * 100
 
     # Score payments are calculated based on dealer, tsumo, basic points, and honba.
     if dealer:
@@ -130,11 +136,10 @@ while True:
 
     print("Payment: " + payment)
     print("--------------------------------------------------------------------------------------------------------------------")
-    print("--------------------------------------------------------------------------------------------------------------------")
 
-    yes_no = ["y", "n"]
+
     while True:
-        response = input("Score another hand? y/n: ")
+        response = input("Score another hand? y/n: ").lower().strip()
         if response in yes_no:
             break
         print("Please enter either 'y' or 'n'.")

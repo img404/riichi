@@ -1,6 +1,6 @@
 """
 Username: img404
-Version: 0.3.1
+Version: 0.3.2
 Purpose: Text-based python app for determining riichi mahjong score payments based on user input.
 """
 
@@ -19,7 +19,7 @@ valid_han_amounts = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "1
 valid_fu_amounts = ["20", "25", "30", "40", "50", "60", "70", "80", "90", "100", "120", "130", "140"]
 valid_honba_amounts = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"]
 
-
+SEPARATOR = "-" * 140
 han = 1
 fu = 20
 basic_points = 160
@@ -27,15 +27,15 @@ honba = 0
 hand_type = "normal"
 
 
-print("--------------------------------------------------------------------------------------------------------------------")
-print("--------------------------------------------------------------------------------------------------------------------")
+print(SEPARATOR)
+print(SEPARATOR)
 print("Riichi Mahjong Score Calculator")
 print("Answer the following questions to score your winning hand.")
 
 
 while True:
-    print("--------------------------------------------------------------------------------------------------------------------")
-    print("--------------------------------------------------------------------------------------------------------------------")
+    print(SEPARATOR)
+    print(SEPARATOR)
     while True:
         dealer_response = input("Were you the dealer? y/n: ").lower().strip()
         if dealer_response in yes_no:
@@ -72,7 +72,7 @@ while True:
     # The basic points of the hand are determined using han and fu values.
     if han >= 13:
         while True:
-            yakuman_response = input("Was the hand a counted yakuman, single yakuman, or double yakuman? (Enter counted/single/double:) ").lower().strip()
+            yakuman_response = input("Was the yakuman counted, single, or double?) ").lower().strip()
             hand_type = yakuman_response + ' yakuman'
             if hand_type in yakuman_types:
                 break
@@ -117,7 +117,7 @@ while True:
         else:
             payment = str(round_up_100(4 * basic_points) + 300 * honba) + " from the player who discarded your winning tile."
 
-    print("--------------------------------------------------------------------------------------------------------------------")
+    print(SEPARATOR)
     if dealer:
         if tsumo:
             print("Dealer tsumo.")
@@ -135,7 +135,7 @@ while True:
         print(hand_type.capitalize() + "; " + str(honba) + " honba.")
 
     print("Payment: " + payment)
-    print("--------------------------------------------------------------------------------------------------------------------")
+    print(SEPARATOR)
 
 
     while True:

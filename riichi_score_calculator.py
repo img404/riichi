@@ -1,6 +1,6 @@
 """
 Username: img404
-Version: 0.3.2
+Version: 0.4.0
 Purpose: Text-based python app for determining riichi mahjong score payments based on user input.
 """
 
@@ -8,56 +8,43 @@ Purpose: Text-based python app for determining riichi mahjong score payments bas
 import math
 
 
-# Payments must be in multiples of 100, so let's define a function that rounds values up to the next hundred.
-def round_up_100(x):
-    return math.ceil(x / 100) * 100
-
-
 yes_no = ["y", "n"]
 yakuman_types = ["counted yakuman", "single yakuman", "double yakuman"]
-valid_han_amounts = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32"]
+valid_han_amounts = range(1,60)
 valid_fu_amounts = ["20", "25", "30", "40", "50", "60", "70", "80", "90", "100", "120", "130", "140"]
-valid_honba_amounts = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"]
-
+valid_honba_amounts = range(0,20)
 SEPARATOR = "-" * 140
-han = 1
-fu = 20
-basic_points = 160
-honba = 0
-hand_type = "normal"
 
 
-print(SEPARATOR)
-print(SEPARATOR)
-print("Riichi Mahjong Score Calculator")
-print("Answer the following questions to score your winning hand.")
-
-
-while True:
+def introduction():
     print(SEPARATOR)
     print(SEPARATOR)
+    print("Riichi Mahjong Score Calculator")
+    print("Answer the following questions to score your winning hand.")
+    print(SEPARATOR)
+    print(SEPARATOR)
+
+
+def hand_characteristics():
     while True:
         dealer_response = input("Were you the dealer? y/n: ").lower().strip()
         if dealer_response in yes_no:
             dealer = dealer_response == "y"
             break
         print("Please enter either 'y' or 'n'.")
-
     while True:
         tsumo_response = input("Did you win by tsumo (self-draw)? y/n: ").lower().strip()
         if tsumo_response in yes_no:
             tsumo = tsumo_response == "y"
             break
         print("Please enter either 'y' or 'n'.")
-
     while True:
         han = input("How many han did the hand score? Enter a numeral: ")
-        if han in valid_han_amounts:
+        if int(han) in valid_han_amounts:
             han = int(han)
             break
         else:
             print(f"Han value cannot be '{han}'. Please try again.")
-
     # If the han value is less than 5, then we must count fu. Otherwise, fu is given a placeholder value of 0.
     if han < 5:
         while True:
@@ -68,8 +55,16 @@ while True:
             print(f"Fu value cannot be '{fu}'. Please try again.")
     else:
         fu = 20
+    while True:
+        honba = input("How many honba were on the table? Enter a numeral: ")
+        if int(honba) in valid_honba_amounts:
+            honba = int(honba)
+            break
+        print(f"Honba value cannot be '{honba}'. Please try again.")
+    return dealer, tsumo, han, fu, honba
 
-    # The basic points of the hand are determined using han and fu values.
+
+def type_and_points(han, fu):
     if han >= 13:
         while True:
             yakuman_response = input("Was the yakuman counted, single, or double?) ").lower().strip()
@@ -96,52 +91,32 @@ while True:
     else:
         hand_type = "normal"
         basic_points = fu * 2 ** (2 + han)
-
-    while True:
-        honba = input("How many honba were on the table? Enter a numeral: ")
-        if honba in valid_honba_amounts:
-            honba = int(honba)
-            break
-        print(f"Honba value cannot be '{honba}'. Please try again.")
+    return hand_type, basic_points
 
 
-    # Score payments are calculated based on dealer, tsumo, basic points, and honba.
+# Payments must be made in multiples of 100, and raw values are rounded up if they aren't already a multiple of 100.
+def round_up_100(x):
+    return math.ceil(x / 100) * 100
+
+
+def payment_calc(basic_points, dealer, tsumo, honba):
     if dealer:
         if tsumo:
             payment = str(round_up_100(2 * basic_points) + 100 * honba) + " from each player."
         else:
-            payment = str(round_up_100(6 * basic_points) + 300 * honba) + " from the player who discarded your winning tile."
+            payment = str(
+                round_up_100(6 * basic_points) + 300 * honba) + " from the player who discarded your winning tile."
     else:
         if tsumo:
-            payment = str(round_up_100(basic_points) + 100 * honba) + " from each non-dealer player and " +  str(round_up_100(2 * basic_points) + 100 * honba) + " from the dealer."
+            payment = str(round_up_100(basic_points) + 100 * honba) + " from each non-dealer player and " + str(
+                round_up_100(2 * basic_points) + 100 * honba) + " from the dealer."
         else:
-            payment = str(round_up_100(4 * basic_points) + 300 * honba) + " from the player who discarded your winning tile."
+            payment = str(
+                round_up_100(4 * basic_points) + 300 * honba) + " from the player who discarded your winning tile."
+    return payment
 
-    print(SEPARATOR)
-    if dealer:
-        if tsumo:
-            print("Dealer tsumo.")
-        else:
-            print("Dealer ron.")
-    else:
-        if tsumo:
-            print("Non-dealer tsumo.")
-        else:
-            print("Non-dealer ron.")
-
-    if hand_type == 'normal':
-        print(str(han) + " han, " + str(fu) + " fu; " + str(honba) + " honba.")
-    else:
-        print(hand_type.capitalize() + "; " + str(honba) + " honba.")
-
-    print("Payment: " + payment)
-    print(SEPARATOR)
-
-
-    while True:
-        response = input("Score another hand? y/n: ").lower().strip()
-        if response in yes_no:
-            break
-        print("Please enter either 'y' or 'n'.")
-    if response == "n":
-        break
+introduction()
+dealer, tsumo, han, fu, honba = hand_characteristics()
+hand_type, basic_points = type_and_points(han,fu)
+payment = payment_calc(basic_points, dealer, tsumo, honba)
+print(f"Payment: {payment}")
